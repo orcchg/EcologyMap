@@ -2,8 +2,10 @@ package com.orcchg.ecologymap
 
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
 import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,5 +50,12 @@ object Util {
             boundsBuilder = boundsBuilder.include(position)
         }
         return boundsBuilder.build()
+    }
+
+    fun moveToMarker(map: GoogleMap, marker: Marker, zoom: Float = 0f): CameraUpdate {
+        val zoomLevel = if (zoom <= 0) map.cameraPosition.zoom else zoom
+        val camera = CameraUpdateFactory.newLatLngZoom(marker.position, zoomLevel)
+        map.animateCamera(camera)
+        return camera
     }
 }
