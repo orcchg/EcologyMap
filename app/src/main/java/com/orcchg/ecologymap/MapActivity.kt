@@ -47,16 +47,29 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     // ------------------------------------------
     private fun run(newLocation: CameraUpdate) {
         map.animateCamera(newLocation)
-        putMarkers()
+        putMarkers().doOnComplete {
+            processMarkers()
+                // restore initial map location
+                .delay(500, TimeUnit.MILLISECONDS)
+                .doOnComplete { Util.delay({ map.animateCamera(newLocation) }) }
+                .subscribe()
+        }.subscribe()
     }
 
     // ------------------------------------------
-    private fun putMarkers() {
-        Flowable.interval(150, 350, TimeUnit.MILLISECONDS)
-                .map { it -> POINTS[it.toInt()] }
-                .take(POINTS.size.toLong())
+    private fun putMarkers(): Flowable<LatLng> =
+        markers().doOnNext { MarkerUtil.addMarker(map, it) }
+
+    private fun processMarkers(): Flowable<LatLng> =
+        markers(init = 600, period = 1000)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext { MarkerUtil.addMarker(map, it) }
-                .subscribe()
-    }
+                .doOnNext { map.animateCamera(CameraUpdateFactory.newLatLngZoom(it, 12f)) }
+
+    // ------------------------------------------
+    private fun markers(init: Long = 150, period: Long = 350): Flowable<LatLng> =
+            Flowable.interval(init, period, TimeUnit.MILLISECONDS)
+                    .map { it -> POINTS[it.toInt()] }
+                    .take(POINTS.size.toLong())
+                    .observeOn(AndroidSchedulers.mainThread())
+
 }
