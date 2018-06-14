@@ -107,9 +107,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, InfoDialog.Callback
 
     private fun showMarkerInfo(marker: MarkerItem) {
         val payload = when (marker.tag) {
-            "point_0" -> Payload(descriptionId = R.string.comment_point_0, waterDescId = R.string.water_point_0, imageIds = listOf(R.drawable.image1, R.drawable.image2), statusIds = listOf(R.drawable.ic_baseline_wifi_off_24px))
-            "point_1" -> Payload(descriptionId = R.string.comment_point_1, waterDescId = R.string.water_point_1, imageIds = listOf(R.drawable.image2), statusIds = listOf(R.drawable.ic_baseline_wifi_24px))
-            else -> Payload(descriptionId = R.string.comment_point_2, waterDescId = R.string.water_point_2, imageIds = listOf(R.drawable.image2), statusIds = listOf(R.drawable.ic_baseline_wifi_24px))
+            "point_0" -> Payload(descriptionId = R.string.comment_point_0, waterDescId = R.string.water_point_0, imageIds = listOf(R.drawable.image1s, R.drawable.image2s), statusIds = listOf(R.drawable.ic_baseline_wifi_off_24px))
+            "point_1" -> Payload(descriptionId = R.string.comment_point_1, waterDescId = R.string.water_point_1, imageIds = listOf(R.drawable.image3s), statusIds = listOf(R.drawable.ic_baseline_wifi_24px))
+            else -> Payload(descriptionId = R.string.comment_point_2, waterDescId = R.string.water_point_2, imageIds = listOf(R.drawable.image4s), statusIds = listOf(R.drawable.ic_baseline_wifi_24px))
         }
         InfoDialog.newInstance(payload).show(supportFragmentManager, "point_${marker.tag}")
     }
