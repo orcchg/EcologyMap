@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import kotlinx.android.synthetic.main.fragment_info.*
 
 class InfoDialog : DialogFragment() {
 
@@ -20,9 +21,23 @@ class InfoDialog : DialogFragment() {
     private var callback: Callback? = null
 
     private val asBottomSheet = true
+    private var payload: Payload? = null
 
     companion object {
-        fun newInstance(): InfoDialog = InfoDialog()
+        private const val BUNDLE_KEY_PAYLOAD = "bundle_key_payload"
+
+        fun newInstance(payload: Payload): InfoDialog {
+            val args = Bundle()
+            args.putParcelable(BUNDLE_KEY_PAYLOAD, payload)
+            val fragment = InfoDialog()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        payload = arguments?.getParcelable(BUNDLE_KEY_PAYLOAD)
     }
 
     override fun onAttach(context: Context?) {
@@ -40,6 +55,13 @@ class InfoDialog : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_info, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        iv_image.setImageResource(payload!!.imageIds[0])
+        tv_comment.setText(payload!!.descriptionId)
+        tv_water.setText(payload!!.waterDescId)
     }
 
     override fun onDismiss(dialog: DialogInterface?) {

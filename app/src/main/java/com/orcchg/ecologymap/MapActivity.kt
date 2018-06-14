@@ -53,7 +53,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, InfoDialog.Callback
         }
         map.setOnCameraIdleListener {
             if (forceMove && selectedMarker != null) {
-                Util.delay({ showMarkerInfo(MarkerItem(0, location = selectedMarker!!.position)) }, 100)
+                val marker = MarkerItem(selectedMarker!!.tag as String, location = selectedMarker!!.position)
+                Util.delay({ showMarkerInfo(marker) }, 100)
             }
         }
 
@@ -81,30 +82,35 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, InfoDialog.Callback
 
     // ------------------------------------------
     private fun putMarkers(): Flowable<MarkerItem> =
-        markers().doOnNext { MarkerUtil.addMarker(map, it.location) }
+        markers().doOnNext { MarkerUtil.addMarker(map, it.location, it.tag) }
 
-    private fun processMarkers(): Flowable<MarkerItem> =
-        markers(init = 600, period = 5000)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext {
-                    hideMarkerInfo(it)
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(it.location, 12f))
-                    Util.delay({ showMarkerInfo(it) })
-                }
+//    private fun processMarkers(): Flowable<MarkerItem> =
+//        markers(init = 600, period = 5000)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnNext {
+//                    hideMarkerInfo(it)
+//                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(it.location, 12f))
+//                    Util.delay({ showMarkerInfo(it) })
+//                }
 
     // ------------------------------------------
     private fun markers(init: Long = 150, period: Long = 350): Flowable<MarkerItem> =
             Flowable.interval(init, period, TimeUnit.MILLISECONDS)
-                    .map { it -> MarkerItem(it, location = POINTS[it.toInt()]) }
+                    .map { it -> MarkerItem(tag = "point_$it", location = POINTS[it.toInt()]) }
                     .take(POINTS.size.toLong())
                     .observeOn(AndroidSchedulers.mainThread())
 
-    private fun hideMarkerInfo(marker: MarkerItem) {
-        val dialog = supportFragmentManager.findFragmentByTag("point_${marker.position}") as? InfoDialog
-        dialog?.dismiss()
-    }
+//    private fun hideMarkerInfo(marker: MarkerItem) {
+//        val dialog = supportFragmentManager.findFragmentByTag("point_${marker.position}") as? InfoDialog
+//        dialog?.dismiss()
+//    }
 
     private fun showMarkerInfo(marker: MarkerItem) {
-        InfoDialog.newInstance().show(supportFragmentManager, "point_${marker.position}")
+        val payload = when (marker.tag) {
+            "point_0" -> Payload(descriptionId = R.string.comment_point_0, waterDescId = R.string.water_point_0, imageIds = listOf(R.drawable.image1, R.drawable.image2), statusIds = listOf(R.drawable.ic_baseline_wifi_off_24px))
+            "point_1" -> Payload(descriptionId = R.string.comment_point_1, waterDescId = R.string.water_point_1, imageIds = listOf(R.drawable.image2), statusIds = listOf(R.drawable.ic_baseline_wifi_24px))
+            else -> Payload(descriptionId = R.string.comment_point_2, waterDescId = R.string.water_point_2, imageIds = listOf(R.drawable.image2), statusIds = listOf(R.drawable.ic_baseline_wifi_24px))
+        }
+        InfoDialog.newInstance(payload).show(supportFragmentManager, "point_${marker.tag}")
     }
 }

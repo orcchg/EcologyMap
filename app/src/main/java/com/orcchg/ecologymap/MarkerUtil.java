@@ -14,9 +14,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MarkerUtil {
 
-    static Marker addMarker(GoogleMap map, LatLng position) {
+    static Marker addMarker(GoogleMap map, LatLng position, String tag) {
         MarkerOptions markerOptions = new MarkerOptions().position(position);
         Marker pinnedMarker = map.addMarker(markerOptions);
+        pinnedMarker.setTag(tag);
         startDropMarkerAnimation(map, pinnedMarker);
         return pinnedMarker;
     }

@@ -3,8 +3,12 @@
     <string name="title_activity_map">Map</string>
 
     <string name="comment_title">Что интересного:</string>
-    <string name="comment_point_1">Шикарная природа! Любуйтесь:)</string>
+    <string name="comment_point_0">Шикарная природа! Любуйтесь:)</string>
+    <string name="comment_point_1">Красивый берег реки</string>
+    <string name="comment_point_2">Электростанция рядом</string>
 
     <string name="water_title">Вода:</string>
+    <string name="water_point_0">очень чистая</string>
     <string name="water_point_1">удовлетворительно чистая</string>
+    <string name="water_point_2">грязная</string>
 </resources>
