@@ -3,6 +3,8 @@ package com.orcchg.ecologymap
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Point
+import android.graphics.PointF
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.DialogFragment
@@ -10,6 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Space
 import kotlinx.android.synthetic.main.fragment_info.*
 
 class InfoDialog : DialogFragment() {
@@ -59,7 +64,25 @@ class InfoDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iv_image.setImageResource(payload!!.imageIds[0])
+        val color = resources.getColor(R.color.textSecondary)
+        val size = resources.getDimensionPixelSize(R.dimen.icon_size)
+        val spaceWidth = resources.getDimensionPixelSize(R.dimen.space_width)
+        ll_status.removeAllViews()
+        payload!!.statusIds.forEach {
+            val xview = ImageView(activity!!)
+            xview.layoutParams = LinearLayout.LayoutParams(size, size)
+            xview.setImageResource(it)
+            xview.setColorFilter(color)
+            ll_status.addView(xview)
+
+            val space = Space(activity!!)
+            space.layoutParams = LinearLayout.LayoutParams(spaceWidth, LinearLayout.LayoutParams.MATCH_PARENT)
+            ll_status.addView(space)
+        }
+        iv_image.apply {
+            hierarchy.setActualImageFocusPoint(PointF(0.5f, 0.0f))
+            setActualImageResource(payload!!.imageIds[0])
+        }
         tv_comment.setText(payload!!.descriptionId)
         tv_water.setText(payload!!.waterDescId)
     }
