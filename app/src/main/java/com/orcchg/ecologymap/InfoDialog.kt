@@ -3,7 +3,6 @@ package com.orcchg.ecologymap
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Point
 import android.graphics.PointF
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
@@ -82,6 +81,9 @@ class InfoDialog : DialogFragment() {
         iv_image.apply {
             hierarchy.setActualImageFocusPoint(PointF(0.5f, 0.0f))
             setActualImageResource(payload!!.imageIds[0])
+            setOnClickListener {
+                startActivity(ImagePreviewActivity.getCallingIntent(activity!!, payload!!.imageIds))
+            }
         }
         tv_comment.setText(payload!!.descriptionId)
         tv_water.setText(payload!!.waterDescId)
