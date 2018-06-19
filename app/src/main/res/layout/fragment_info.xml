@@ -61,7 +61,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginStart="2dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/tv_comment_title"
+        app:layout_constraintBottom_toTopOf="@id/tv_water"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

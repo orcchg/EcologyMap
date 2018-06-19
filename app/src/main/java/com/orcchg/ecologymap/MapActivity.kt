@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, InfoDialog.Callback {
 
     companion object {
-        val POINT_1 = LatLng(57.5687, 40.1540)
-        val POINT_2 = LatLng(57.6494, 40.2075)
+        val POINT_1 = LatLng(57.5727, 40.1540)
+        val POINT_2 = LatLng(57.6474, 40.2075)
         val POINT_3 = LatLng(57.6715, 40.3681)
     }
 
@@ -59,7 +59,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, InfoDialog.Callback
         }
 
         newLocation = Util.coverPositionsBest(POINTS, 11f)
-        Util.delay({ run(newLocation) }, delay = 2000)
+        Util.delay({ run(newLocation) }, delay = 5000)
     }
 
     override fun onDismiss() {
@@ -108,13 +108,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, InfoDialog.Callback
     private fun showMarkerInfo(marker: MarkerItem) {
         val payload = when (marker.tag) {
             "point_0" -> Payload(descriptionId = R.string.comment_point_0, waterDescId = R.string.water_point_0,
-                    imageIds = listOf(R.drawable.image1s, R.drawable.image2s),
+                    imageIds = listOf(R.drawable.image1s, R.drawable.image2s, R.drawable.image5s, R.drawable.image6),
                     statusIds = listOf(R.drawable.ic_baseline_wifi_off_24px, R.drawable.ic_baseline_camp, R.drawable.ic_baseline_restaurant_24px))
             "point_1" -> Payload(descriptionId = R.string.comment_point_1, waterDescId = R.string.water_point_1,
-                    imageIds = listOf(R.drawable.image3s),
+                    imageIds = listOf(R.drawable.image3s, R.drawable.image7, R.drawable.image8, R.drawable.image9),
                     statusIds = listOf(R.drawable.ic_baseline_wifi_24px, R.drawable.ic_baseline_restaurant_24px, R.drawable.ic_baseline_local_gas_station_24px))
             else -> Payload(descriptionId = R.string.comment_point_2, waterDescId = R.string.water_point_2,
-                    imageIds = listOf(R.drawable.image4s),
+                    imageIds = listOf(R.drawable.image4s, R.drawable.image10, R.drawable.image11, R.drawable.image12),
                     statusIds = listOf(R.drawable.ic_baseline_wifi_24px, R.drawable.ic_baseline_camp, R.drawable.ic_baseline_restaurant_24px, R.drawable.ic_baseline_local_gas_station_24px))
         }
         InfoDialog.newInstance(payload).show(supportFragmentManager, "point_${marker.tag}")
