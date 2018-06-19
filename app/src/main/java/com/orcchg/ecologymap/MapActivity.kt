@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, InfoDialog.Callback {
 
     companion object {
-        val POINT_1 = LatLng(57.5495, 40.1608)
+        val POINT_1 = LatLng(57.5687, 40.1540)
         val POINT_2 = LatLng(57.6494, 40.2075)
         val POINT_3 = LatLng(57.6715, 40.3681)
     }

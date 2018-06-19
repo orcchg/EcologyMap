@@ -9,7 +9,7 @@
     <string name="comment_point_2">Электростанция рядом</string>
 
     <string name="water_title">Вода:</string>
-    <string name="water_point_0">очень чистая</string>
-    <string name="water_point_1">удовлетворительно чистая</string>
-    <string name="water_point_2">грязная</string>
+    <string name="water_point_0">удовлетворительно чистая\n(купание разрешено)</string>
+    <string name="water_point_1">удовлетворительно чистая\n(купание разрешено)</string>
+    <string name="water_point_2">удовлетворительно чистая\n(купание разрешено)</string>
 </resources>
